@@ -42,8 +42,9 @@ void USuqsGameStateComponent::TickComponent(float DeltaTime,
 	if (GetOwner()->HasAuthority() && bServerPendingChanges)
 	{
 		ProgressView.FromUObject(GetServerProgression(), bIncludeCompletedObjectives);
-		FireChangedEvent();
+		// In case the event causes more changes, mark pending = false before calling it
 		bServerPendingChanges = false;
+		FireChangedEvent();
 	}
 }
 
